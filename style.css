@@ -41,3 +41,22 @@ body{
     display: flex;
     align-items: center;
 }
+
+
+.tasksUl{
+    list-style: none;
+    padding: 0;
+}
+
+.taskBox{
+    border-color: white;
+    border-style: solid;
+    height: 40px;
+    width: 300px;
+    display: flex;
+    font-size: large;
+    border-width: 1px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+}
