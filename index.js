@@ -1,13 +1,23 @@
 let idValue = 1
-let inputText
 let tasksArray = []
 
 const addButton = document.getElementById("add-btn")
 const inputElement = document.getElementById("input-el")
 const tasksUlElement = document.getElementById("tasks-ul-el")
 
+if(localStorage.getItem("tasks")){
+    tasksArray = JSON.parse(localStorage.getItem("tasks"))
+    for(index = 0; index < tasksArray.length ; index ++){
+        renderTasks(tasksArray[index])
+    }
+    const lastTaskSaved = tasksArray[tasksArray.length-1]
+    idValue = lastTaskSaved.id + 1
+    console.log(idValue)
+}
+
 addButton.addEventListener("click",function(){
-    inputText = inputElement.value.trim()
+    const inputText = inputElement.value.trim()
+    inputElement.value = ""
     if(inputText){
         const task = {
         id: idValue,
@@ -15,23 +25,23 @@ addButton.addEventListener("click",function(){
         name: inputText
         }
         tasksArray.push(task)
+        idValue ++
         localStorage.setItem("tasks",JSON.stringify(tasksArray))
-        renderTasks()
+        renderTasks(tasksArray [tasksArray.length - 1])
     }else{
         alert("The task can't be an empty space !")
     }
 })
 
 
-function renderTasks(){
-    const getTask = tasksArray [tasksArray.length - 1]
+function renderTasks(taskObject){
     tasksUlElement.innerHTML += `
                 <li class="taskBox">
-                    <span>${getTask.name}</span>
+                    <span>${taskObject.name}</span>
                     <div class="deleteAndEditButtons">
                         <button class="editButton">Edit</button>
                         <button class="deleteButton">Delete</button>
                     </div>
+                </li>
     `
 }
-
