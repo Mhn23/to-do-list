@@ -111,13 +111,7 @@ function changeState(id){
     let completedTask = tasksArray.find(function(task){
         return task.id === id
     })
-    if(completedTask.isCompleted)
-    {
-        completedTask.isCompleted = false
-    }
-    else{
-        completedTask.isCompleted = true
-    }
+    completedTask.isCompleted = !completedTask.isCompleted
     localStorage.setItem("tasks",JSON.stringify(tasksArray))
     tasksUlElement.innerHTML = ""
     for(let index = 0; index < tasksArray.length ; index ++){
