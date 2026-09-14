@@ -5,13 +5,18 @@ const addButton = document.getElementById("add-btn")
 const inputElement = document.getElementById("input-el")
 const tasksUlElement = document.getElementById("tasks-ul-el")
 
-if(localStorage.getItem("tasks")){
+if(localStorage.getItem("tasks")){                            
     tasksArray = JSON.parse(localStorage.getItem("tasks"))
     for(index = 0; index < tasksArray.length ; index ++){
         renderTasks(tasksArray[index])
     }
-    const lastTaskSaved = tasksArray[tasksArray.length-1]
-    idValue = lastTaskSaved.id + 1
+    if(tasksArray.length != 0){
+        const lastTaskSaved = tasksArray[tasksArray.length - 1]
+        idValue = lastTaskSaved.id + 1
+    }
+    else{
+        idValue = 1
+    }
 }
 
 addButton.addEventListener("click",function(){
@@ -64,3 +69,23 @@ tasksUlElement.addEventListener("click",function(event){
 })
 
 
+tasksUlElement.addEventListener("click", function(event){
+    if (event.target.classList.contains("editButton")){
+        const taskId = Number(event.target.dataset.id)
+        let newTask = prompt("Enter new text: ", taskEdit.name)
+        const taskEdit = tasksArray.find(function(task){
+            return task.id === taskId
+        })
+        if(newTask){
+            taskEdit.name = newTask
+            tasksUlElement.innerHTML = ""
+            localStorage.setItem("tasks",JSON.stringify(tasksArray))
+            for (index = 0; index < tasksArray.length ; index ++){
+                renderTasks(tasksArray[index])
+            }
+        }
+        else{
+            alert("Task can't be an empty string")
+        }
+    }
+})
