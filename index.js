@@ -16,9 +16,22 @@ addButton.addEventListener("click",function(){
         }
         tasksArray.push(task)
         localStorage.setItem("tasks",JSON.stringify(tasksArray))
-        
+        renderTasks()
     }else{
         alert("The task can't be an empty space !")
     }
 })
+
+
+function renderTasks(){
+    const getTask = tasksArray [tasksArray.length - 1]
+    tasksUlElement.innerHTML += `
+                <li class="taskBox">
+                    <span>${getTask.name}</span>
+                    <div class="deleteAndEditButtons">
+                        <button class="editButton">Edit</button>
+                        <button class="deleteButton">Delete</button>
+                    </div>
+    `
+}
 
