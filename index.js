@@ -106,8 +106,8 @@ tasksUlElement.addEventListener("click", function(event){           //this is pr
 })
 
 
-function changeState(id){
-    id = Number(id)
+function changeState(id){               //this changes the state of the task is its either completed
+    id = Number(id)                     //or not and re-renders the tasksarray so that it will show the modifications that have been made
     let completedTask = tasksArray.find(function(task){
         return task.id === id
     })
