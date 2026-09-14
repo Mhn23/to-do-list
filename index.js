@@ -39,10 +39,11 @@ addButton.addEventListener("click",function(){          //this is where the task
 
 
 function renderTasks(taskObject){           //this is the render function,it shows the array on the screen/html
-    tasksUlElement.innerHTML += `           
+    if(!taskObject.isCompleted){
+        tasksUlElement.innerHTML += `           
                 <li class="taskBox">
                     <div>
-                        <input type="checkbox">
+                        <input type="checkbox" onclick="changeState('${taskObject.id}')">
                         <span>${taskObject.name}</span>
                     </div>
                     <div class="deleteAndEditButtons">
@@ -51,6 +52,20 @@ function renderTasks(taskObject){           //this is the render function,it sho
                     </div>
                 </li>
     `
+    }else{
+        tasksUlElement.innerHTML += `           
+                <li class="taskBox">
+                    <div>
+                        <input type="checkbox" onclick="changeState('${taskObject.id}')" checked>
+                        <span class = "completedTask">${taskObject.name}</span>
+                    </div>
+                    <div class="deleteAndEditButtons">
+                        <button class="editButton" data-id="${taskObject.id}">Edit</button>
+                        <button class="deleteButton" data-id="${taskObject.id}">Delete</button>
+                    </div>
+                </li>
+    `
+    }
 }
 
 
@@ -89,3 +104,23 @@ tasksUlElement.addEventListener("click", function(event){           //this is pr
         }
     }
 })
+
+
+function changeState(id){
+    id = Number(id)
+    let completedTask = tasksArray.find(function(task){
+        return task.id === id
+    })
+    if(completedTask.isCompleted)
+    {
+        completedTask.isCompleted = false
+    }
+    else{
+        completedTask.isCompleted = true
+    }
+    localStorage.setItem("tasks",JSON.stringify(tasksArray))
+    tasksUlElement.innerHTML = ""
+    for(let index = 0; index < tasksArray.length ; index ++){
+        renderTasks(tasksArray[index])
+    }
+}

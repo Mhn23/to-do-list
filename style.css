@@ -79,3 +79,9 @@ body{
     border-radius: 5px;
     padding: 5px;
 }
+
+
+.completedTask{
+    text-decoration: line-through;
+    color: gray;
+}
