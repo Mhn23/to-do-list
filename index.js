@@ -5,9 +5,9 @@ const addButton = document.getElementById("add-btn")
 const inputElement = document.getElementById("input-el")
 const tasksUlElement = document.getElementById("tasks-ul-el")
 
-if(localStorage.getItem("tasks")){                            
-    tasksArray = JSON.parse(localStorage.getItem("tasks"))
-    for(index = 0; index < tasksArray.length ; index ++){
+if(localStorage.getItem("tasks")){                     //here it checks if there is data in localstorage and if there is         
+    tasksArray = JSON.parse(localStorage.getItem("tasks"))              //it simply renders it out on the screend and also modifies
+    for(index = 0; index < tasksArray.length ; index ++){               //the tasks array
         renderTasks(tasksArray[index])
     }
     if(tasksArray.length != 0){
@@ -19,8 +19,8 @@ if(localStorage.getItem("tasks")){
     }
 }
 
-addButton.addEventListener("click",function(){
-    const inputText = inputElement.value.trim()
+addButton.addEventListener("click",function(){          //this is where the task object is created and is added to the array and localstorage
+    const inputText = inputElement.value.trim()         //also after its being added its also rendered on the screen
     inputElement.value = ""
     if(inputText){
         const task = {
@@ -38,8 +38,8 @@ addButton.addEventListener("click",function(){
 })
 
 
-function renderTasks(taskObject){
-    tasksUlElement.innerHTML += `
+function renderTasks(taskObject){           //this is the render function,it shows the array on the screen/html
+    tasksUlElement.innerHTML += `           
                 <li class="taskBox">
                     <div>
                         <input type="checkbox">
@@ -54,10 +54,10 @@ function renderTasks(taskObject){
 }
 
 
-tasksUlElement.addEventListener("click",function(event){
-    if(event.target.classList.contains("deleteButton")){
-        const taskId = Number(event.target.dataset.id)
-        tasksArray = tasksArray.filter(function(task){
+tasksUlElement.addEventListener("click",function(event){        //this event listener is made for the delete button so that when a button is 
+    if(event.target.classList.contains("deleteButton")){        //clicked anywhere inside of the unordered list it checks if its a delete button
+        const taskId = Number(event.target.dataset.id)          //and if it is than it simply takes the id, searches inside of the array and removes the object-task
+        tasksArray = tasksArray.filter(function(task){          //with the same id
             return task.id !== taskId
         })
         tasksUlElement.innerHTML = ""
@@ -69,10 +69,10 @@ tasksUlElement.addEventListener("click",function(event){
 })
 
 
-tasksUlElement.addEventListener("click", function(event){
-    if (event.target.classList.contains("editButton")){
-        const taskId = Number(event.target.dataset.id)
-        let newTask = prompt("Enter new text: ", taskEdit.name)
+tasksUlElement.addEventListener("click", function(event){           //this is pretty much the same as the delete button but it modifies the name property
+    if (event.target.classList.contains("editButton")){             //of the object with the id that was clicked and it takes advantage of the fact that
+        const taskId = Number(event.target.dataset.id)              //in js objects are referenced as pointers, so when modified it modifies inside the array 
+        let newTask = prompt("Enter new text: ", taskEdit.name)     //without the need of me to add it to the array again
         const taskEdit = tasksArray.find(function(task){
             return task.id === taskId
         })
