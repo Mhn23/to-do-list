@@ -37,7 +37,10 @@ addButton.addEventListener("click",function(){
 function renderTasks(taskObject){
     tasksUlElement.innerHTML += `
                 <li class="taskBox">
-                    <span>${taskObject.name}</span>
+                    <div>
+                        <input type="checkbox">
+                        <span>${taskObject.name}</span>
+                    </div>
                     <div class="deleteAndEditButtons">
                         <button class="editButton">Edit</button>
                         <button class="deleteButton">Delete</button>
@@ -45,3 +48,4 @@ function renderTasks(taskObject){
                 </li>
     `
 }
+
