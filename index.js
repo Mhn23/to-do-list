@@ -12,7 +12,6 @@ if(localStorage.getItem("tasks")){
     }
     const lastTaskSaved = tasksArray[tasksArray.length-1]
     idValue = lastTaskSaved.id + 1
-    console.log(idValue)
 }
 
 addButton.addEventListener("click",function(){
@@ -42,10 +41,26 @@ function renderTasks(taskObject){
                         <span>${taskObject.name}</span>
                     </div>
                     <div class="deleteAndEditButtons">
-                        <button class="editButton">Edit</button>
-                        <button class="deleteButton">Delete</button>
+                        <button class="editButton" data-id="${taskObject.id}">Edit</button>
+                        <button class="deleteButton" data-id="${taskObject.id}">Delete</button>
                     </div>
                 </li>
     `
 }
+
+
+tasksUlElement.addEventListener("click",function(event){
+    if(event.target.classList.contains("deleteButton")){
+        const taskId = Number(event.target.dataset.id)
+        tasksArray = tasksArray.filter(function(task){
+            return task.id !== taskId
+        })
+        tasksUlElement.innerHTML = ""
+        for (let index = 0 ; index < tasksArray.length ; index ++){
+            renderTasks(tasksArray[index])
+        }
+        localStorage.setItem("tasks",JSON.stringify(tasksArray))
+    }
+})
+
 
