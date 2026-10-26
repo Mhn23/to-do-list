@@ -86,11 +86,12 @@ tasksUlElement.addEventListener("click",function(event){        //this event lis
 
 tasksUlElement.addEventListener("click", function(event){           //this is pretty much the same as the delete button but it modifies the name property
     if (event.target.classList.contains("editButton")){             //of the object with the id that was clicked and it takes advantage of the fact that
-        const taskId = Number(event.target.dataset.id)              //in js objects are referenced as pointers, so when modified it modifies inside the array 
-        let newTask = prompt("Enter new text: ", taskEdit.name)     //without the need of me to add it to the array again
-        const taskEdit = tasksArray.find(function(task){
+                                                                    //without the need of me to add it to the array again
+        const taskId = Number(event.target.dataset.id)              //in js objects are referenced as pointers, so when modified it modifies inside the array
+        const taskEdit = tasksArray.find(function(task){            
             return task.id === taskId
         })
+        let newTask = prompt("Enter new text: ", taskEdit.name) 
         if(newTask){
             taskEdit.name = newTask
             tasksUlElement.innerHTML = ""
